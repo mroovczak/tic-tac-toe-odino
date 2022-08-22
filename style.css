@@ -1,0 +1,7 @@
+#board {
+    display: grid;
+    width: 800px;
+    background-color: rgb(226, 184, 184);
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
