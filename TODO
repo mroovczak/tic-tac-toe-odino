@@ -1,0 +1,37 @@
+player factory
+ fields:
+  -name
+  -sign
+  -score
+ methods:
+  -move
+  -setSign /get
+  -setName /get
+  -setScore /get
+
+gameController module
+ fields:
+  -gamebaord
+  -players (array of Player objects)
+  -round (?) //number or x/o sign or 0/1 or player object
+  methods:
+   -seters/getters
+   -checkIfMoveLegal
+   -doMove (?)
+   -checkIfGameOver (tie or 3in a row)
+
+displayController module
+ fields:
+
+ methods:
+  -reDrawBoard (probably just change class of field Elements)
+  -drawSign (probably just change class of field Element)
+  -drawLine (winning 3 in a row)
+  -drawScore (?)
+
+  gameBoard module (all doms and listeners?) or in displayController
+   -gamebaord (array of elements with listeners)
+   -board (? parent of gameboard elements ?)
+
+   methods:
+   -addListeners (add event listeners to gameboard array of objects)
