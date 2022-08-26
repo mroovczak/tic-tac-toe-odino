@@ -10,3 +10,6 @@
     /* background-color: aqua; */
     border: black solid 1px;
 }
+#board .field[data-sign="x"]{
+    background-color: yellow;
+}
