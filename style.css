@@ -13,3 +13,6 @@
 #board .field[data-sign="x"]{
     background-color: yellow;
 }
+#board .field[data-sign="o"]{
+    background-color: green;
+}

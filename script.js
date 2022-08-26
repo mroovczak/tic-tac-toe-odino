@@ -13,13 +13,38 @@ const gameBoard = (() =>{
 
 //Player factory
 const Player = (name,sign) => {
+    let score = 0;
+    const getScore = () => score;
+    const setScore = (newScore) => score = newScore;
     const getName = () => name;
     const getSign = () => sign;
     return {
         getName,
         getSign,
+        getScore,
+        setScore,
     }
 };
+
+//gameController module
+const gameModule = (() =>
+{
+    let round = 0; //which player is moving
+    let players = [];
+    players.push(Player("Antek","x"));
+    players.push(Player("Mietek","o"));
+    const nextRound = () => {
+        round = 1-round;
+        console.log (round);
+    }
+    const getRound = () => round;
+
+    return {
+        players,
+        nextRound,
+        getRound,
+    }
+})();
 
 // displayController module
 const displayController = (() => {
@@ -47,9 +72,10 @@ const displayController = (() => {
         gameboard.forEach((row,indexX)=> {
             row.forEach((element,indexY) => {
                 element.addEventListener("click", (e)=>{
-                    e.target.setAttribute("data-sign",player1.getSign());
-                    gameBoard.gameboard[indexX][indexY]=player1.getSign();
+                    e.target.setAttribute("data-sign",gameModule.players[gameModule.getRound()].getSign());
+                    gameBoard.gameboard[indexX][indexY]=gameModule.players[gameModule.getRound()].getSign();
                     console.table(gameBoard.gameboard);
+                    gameModule.nextRound();
                 });
             });
         });
@@ -64,6 +90,6 @@ const displayController = (() => {
 })();
 displayController.drawFields();
 displayController.addListeners();
-const player1 = Player("Antek","x");
-const player2 = Player("Mietek","o");
-console.log(player1.getName());
+
+gameModule.players[0].setScore(3);
+console.log(gameModule.players[0].getScore());
