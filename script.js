@@ -1,8 +1,8 @@
 const gameBoard = (() =>{
     let gameboard = [
-        [,,],
-        [,,],
-        [,,]
+        [null,null,null],
+        [null,null,null],
+        [null,null,null]
     ]; //create empty 3x3 array of
 
     return {
@@ -26,10 +26,12 @@ const displayController = (() => {
     }
 })();
 console.log(gameBoard.gameboard);
-gameBoard.gameboard.forEach((field, index) => {
-    let element = document.createElement("div");
-    element.classList.add(index);
-    console.log(element);
-    displayController.board.appendChild(element);
-    console.log("s");
+gameBoard.gameboard.forEach((row, indexX) => {
+    row.forEach((field,indexY)=> {
+        let element = document.createElement("div");
+        element.setAttribute("class","field");
+        element.setAttribute("data-x",indexX);
+        element.setAttribute("data-y",indexY);
+        displayController.board.appendChild(element);
+    });
  });
