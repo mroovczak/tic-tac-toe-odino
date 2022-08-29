@@ -44,6 +44,7 @@ const gameModule = (() =>
         }  
         if (winner=isWin()){
             console.log("winner is ",winner[2]);
+            console.log(winner[0],winner[1]);
         };
         if (!isGameOver()) {
             console.log('gg');
@@ -66,9 +67,14 @@ const gameModule = (() =>
             }
     
             if (gameBoard.gameboard[0][i]==gameBoard.gameboard[1][i] && gameBoard.gameboard[0][i]==gameBoard.gameboard[2][i] && gameBoard.gameboard[0][i]!= null ) {
-                return ["column",i,gameBoard.gameboard[0][i]]; 
-                
+                return ["column",i,gameBoard.gameboard[0][i]];   
             }
+        }
+        if (gameBoard.gameboard[0][0]==gameBoard.gameboard[1][1] && gameBoard.gameboard[0][0]==gameBoard.gameboard[2][2] && gameBoard.gameboard[0][0]!= null ) {
+            return ["vertical",0,gameBoard.gameboard[0][0]];   
+        }
+        if (gameBoard.gameboard[0][2]==gameBoard.gameboard[1][1] && gameBoard.gameboard[1][1]==gameBoard.gameboard[2][0] && gameBoard.gameboard[1][1]!= null ) {
+            return ["vertical",1,gameBoard.gameboard[1][1]];   
         }
         return false;
     };
