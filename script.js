@@ -45,6 +45,8 @@ const gameModule = (() =>
         if (winner=isWin()){
             console.log("winner is ",winner[2]);
             console.log(winner[0],winner[1]);
+            players[winner[2]].setScore(players[winner[2]].getScore()+1);
+            console.table(players[winner[2]].getScore());
         };
         if (!isGameOver()) {
             console.log('draw');
@@ -112,7 +114,8 @@ const displayController = (() => {
     }
     const drawSign = (e) => {
         e.target.setAttribute("data-sign",gameModule.players[gameModule.getRound()].getSign());
-        gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]=gameModule.players[gameModule.getRound()].getSign();
+        // gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]=gameModule.players[gameModule.getRound()].getSign();
+        gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]=gameModule.getRound();
         console.table(gameBoard.gameboard);    
     };
     const addListeners = () => {
@@ -134,5 +137,5 @@ const displayController = (() => {
 displayController.drawFields();
 displayController.addListeners();
 
-gameModule.players[0].setScore(3);
+// gameModule.players[0].setScore(3);
 // console.log(gameModule.players[0].getScore());
