@@ -39,9 +39,10 @@ const gameModule = (() =>
         } else {
             round = 1-round;
             displayController.drawSign(e);
-            console.log (isGameOver());
+            // console.log (isGameOver());
             
-        }   
+        }  
+        console.log(isWin()); 
         if (!isGameOver()) {
             console.log('gg');
             return false
@@ -53,6 +54,20 @@ const gameModule = (() =>
     };
     const isGameOver = () => {     
         return (gameBoard.gameboard.some(row => row.includes(null))); // to search 2d array for null field
+    };
+    const isWin = () => {
+        //rows loop instead of .forEach so i can use it in other cases
+        for (let i=0; i<gameBoard.gameboard.length; i++)
+            if (gameBoard.gameboard[i][0]==gameBoard.gameboard[i][1] && gameBoard.gameboard[i][0]==gameBoard.gameboard[i][2] && gameBoard.gameboard[i][0]!= null ) {
+                return ["row",i,gameBoard.gameboard[i][0]];
+            }
+        //columns
+        for (let i=0; i<gameBoard.gameboard.length; i++)
+            if (gameBoard.gameboard[0][i]==gameBoard.gameboard[1][i] && gameBoard.gameboard[0][i]==gameBoard.gameboard[2][i] && gameBoard.gameboard[0][i]!= null ) {
+                return ["column",i,gameBoard.gameboard[i][0]]; 
+                //return column/row/vertical, which column etc, sign
+        }
+        return false;
     };
 
     const getRound = () => round;
