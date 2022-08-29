@@ -33,15 +33,33 @@ const gameModule = (() =>
     let players = [];
     players.push(Player("Antek","x"));
     players.push(Player("Mietek","o"));
-    const nextRound = () => {
-        round = 1-round;
-        console.log (round);
+    const doMove = (e) => {
+        if (!isMoveLegal(e)) {
+            return false
+        } else {
+            round = 1-round;
+            displayController.drawSign(e);
+            console.log (isGameOver());
+            
+        }   
+        if (!isGameOver()) {
+            console.log('gg');
+            return false
+        }
+        return true
     }
+    const isMoveLegal = (e) =>{
+        return !(gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]); //returns true if field is NULL
+    };
+    const isGameOver = () => {     
+        return (gameBoard.gameboard.some(row => row.includes(null))); // to search 2d array for null field
+    };
+
     const getRound = () => round;
 
     return {
         players,
-        nextRound,
+        doMove,
         getRound,
     }
 })();
@@ -68,15 +86,15 @@ const displayController = (() => {
             });
          });
     }
+    const drawSign = (e) => {
+        e.target.setAttribute("data-sign",gameModule.players[gameModule.getRound()].getSign());
+        gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]=gameModule.players[gameModule.getRound()].getSign();
+        console.table(gameBoard.gameboard);    
+    };
     const addListeners = () => {
-        gameboard.forEach((row,indexX)=> {
-            row.forEach((element,indexY) => {
-                element.addEventListener("click", (e)=>{
-                    e.target.setAttribute("data-sign",gameModule.players[gameModule.getRound()].getSign());
-                    gameBoard.gameboard[indexX][indexY]=gameModule.players[gameModule.getRound()].getSign();
-                    console.table(gameBoard.gameboard);
-                    gameModule.nextRound();
-                });
+        gameboard.forEach((row)=> {
+            row.forEach((element) => {
+                element.addEventListener("click", gameModule.doMove);
             });
         });
     }
@@ -86,10 +104,11 @@ const displayController = (() => {
         board,
         drawFields,
         addListeners,
+        drawSign,
     }
 })();
 displayController.drawFields();
 displayController.addListeners();
 
 gameModule.players[0].setScore(3);
-console.log(gameModule.players[0].getScore());
+// console.log(gameModule.players[0].getScore());
