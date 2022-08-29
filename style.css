@@ -7,12 +7,21 @@
 }
 #board .field {
     height: 200px;
+    text-align: center;
+    line-height: 200px;
+    font-size: 100px;
     /* background-color: aqua; */
     border: black solid 1px;
 }
-#board .field[data-sign="x"]{
+/* #board .field[data-sign="x"]{
     background-color: yellow;
+} */
+#board .field[data-sign="x"]::after{
+    content: "\2717";
 }
-#board .field[data-sign="o"]{
+/* #board .field[data-sign="o"]{
     background-color: green;
+} */
+#board .field[data-sign="o"]::after{
+    content: "\1F53E";
 }

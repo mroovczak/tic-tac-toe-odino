@@ -47,7 +47,7 @@ const gameModule = (() =>
             console.log(winner[0],winner[1]);
         };
         if (!isGameOver()) {
-            console.log('gg');
+            console.log('draw');
             return false
         }
         return true
