@@ -43,10 +43,9 @@ const gameModule = (() =>
             
         }  
         if (winner=isWin()){
-            console.log("winner is ",winner[2]);
-            console.log(winner[0],winner[1]);
-            players[winner[2]].setScore(players[winner[2]].getScore()+1);
-            console.table(players[winner[2]].getScore());
+            // console.log(winner);
+            displayController.drawLine(...winner);
+            //console.table(winner);
         };
         if (!isGameOver()) {
             console.log('draw');
@@ -65,18 +64,18 @@ const gameModule = (() =>
         //rows loop instead of .forEach so i can use it in other cases
         for (let i=0; i<gameBoard.gameboard.length; i++) {
             if (gameBoard.gameboard[i][0]==gameBoard.gameboard[i][1] && gameBoard.gameboard[i][0]==gameBoard.gameboard[i][2] && gameBoard.gameboard[i][0]!= null ) {
-                return ["row",i,gameBoard.gameboard[i][0]];
+                return [i,0,i,2];
             }
     
             if (gameBoard.gameboard[0][i]==gameBoard.gameboard[1][i] && gameBoard.gameboard[0][i]==gameBoard.gameboard[2][i] && gameBoard.gameboard[0][i]!= null ) {
-                return ["column",i,gameBoard.gameboard[0][i]];   
+                return [0,i,2,i]; 
             }
         }
         if (gameBoard.gameboard[0][0]==gameBoard.gameboard[1][1] && gameBoard.gameboard[0][0]==gameBoard.gameboard[2][2] && gameBoard.gameboard[0][0]!= null ) {
-            return ["vertical",0,gameBoard.gameboard[0][0]];   
+            return [0,0,2,2];  
         }
         if (gameBoard.gameboard[0][2]==gameBoard.gameboard[1][1] && gameBoard.gameboard[1][1]==gameBoard.gameboard[2][0] && gameBoard.gameboard[1][1]!= null ) {
-            return ["vertical",1,gameBoard.gameboard[1][1]];   
+            return [0,2,2,0];  
         }
         return false;
     };
@@ -116,8 +115,29 @@ const displayController = (() => {
         e.target.setAttribute("data-sign",gameModule.players[gameModule.getRound()].getSign());
         // gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]=gameModule.players[gameModule.getRound()].getSign();
         gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]=gameModule.getRound();
-        console.table(gameBoard.gameboard);    
+        // console.table(gameBoard.gameboard);    
     };
+    const drawLine = (y1,x1,y2,x2) =>{
+        let ax = gameboard[x1][y1].getBoundingClientRect().x + gameboard[x1][y1].getBoundingClientRect().width/2;
+        let ay = gameboard[x1][y1].getBoundingClientRect().y + gameboard[x1][y1].getBoundingClientRect().height/2;
+        let bx = gameboard[x2][y2].getBoundingClientRect().x + gameboard[x1][y1].getBoundingClientRect().width/2;
+        let by = gameboard[x2][y2].getBoundingClientRect().y + gameboard[x1][y1].getBoundingClientRect().height/2;
+        if(ay>by)
+        {
+            bx=ax+bx;  
+            ax=bx-ax;
+            bx=bx-ax;
+            by=ay+by;  
+            ay=by-ay;  
+            by=by-ay;
+        }
+        var calc=Math.atan((ay-by)/(bx-ax));
+        calc=calc*180/Math.PI;
+        var length=Math.sqrt((ax-bx)*(ax-bx)+(ay-by)*(ay-by));
+        document.body.innerHTML += "<div id='line' style='height:" + length + "px;width:1px;background-color:black;position:absolute;top:" + (ay) + "px;left:" + (ax) + "px;transform:rotate(" + calc + "deg);-ms-transform:rotate(" + calc + "deg);transform-origin:0% 0%;-moz-transform:rotate(" + calc + "deg);-moz-transform-origin:0% 0%;-webkit-transform:rotate(" + calc  + "deg);-webkit-transform-origin:0% 0%;-o-transform:rotate(" + calc + "deg);-o-transform-origin:0% 0%;'></div>"
+    console.log(ay,ax,by,bx);
+    console.log(y1,x1,y2,x2);
+};
     const addListeners = () => {
         gameboard.forEach((row)=> {
             row.forEach((element) => {
@@ -132,6 +152,7 @@ const displayController = (() => {
         drawFields,
         addListeners,
         drawSign,
+        drawLine,
     }
 })();
 displayController.drawFields();
