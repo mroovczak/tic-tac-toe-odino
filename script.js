@@ -43,9 +43,11 @@ const gameModule = (() =>
             
         }  
         if (winner=isWin()){
-            // console.log(winner);
+            let playerNumber = gameBoard.gameboard[winner[0]][winner[1]]
+            console.log(players[playerNumber].getName());
+            players[playerNumber].setScore(players[playerNumber].getScore()+1);
             displayController.drawLine(...winner);
-            //console.table(winner);
+            console.table(players[playerNumber].getScore());
         };
         if (!isGameOver()) {
             console.log('draw');
@@ -91,6 +93,7 @@ const gameModule = (() =>
 
 // displayController module
 const displayController = (() => {
+    const lineThickness = "5px";
     const board = document.querySelector('#board');
     let gameboard=[
         [null,null,null],
@@ -134,9 +137,9 @@ const displayController = (() => {
         var calc=Math.atan((ay-by)/(bx-ax));
         calc=calc*180/Math.PI;
         var length=Math.sqrt((ax-bx)*(ax-bx)+(ay-by)*(ay-by));
-        document.body.innerHTML += "<div id='line' style='height:" + length + "px;width:1px;background-color:black;position:absolute;top:" + (ay) + "px;left:" + (ax) + "px;transform:rotate(" + calc + "deg);-ms-transform:rotate(" + calc + "deg);transform-origin:0% 0%;-moz-transform:rotate(" + calc + "deg);-moz-transform-origin:0% 0%;-webkit-transform:rotate(" + calc  + "deg);-webkit-transform-origin:0% 0%;-o-transform:rotate(" + calc + "deg);-o-transform-origin:0% 0%;'></div>"
-    console.log(ay,ax,by,bx);
-    console.log(y1,x1,y2,x2);
+        document.body.innerHTML += "<div id='line' style='height:" + length + "px;width:"+lineThickness+";background-color:black;position:absolute;top:" + (ay) + "px;left:" + (ax) + "px;transform:rotate(" + calc + "deg);-ms-transform:rotate(" + calc + "deg);transform-origin:0% 0%;-moz-transform:rotate(" + calc + "deg);-moz-transform-origin:0% 0%;-webkit-transform:rotate(" + calc  + "deg);-webkit-transform-origin:0% 0%;-o-transform:rotate(" + calc + "deg);-o-transform-origin:0% 0%;'></div>"
+    // console.log(ay,ax,by,bx);
+    // console.log(y1,x1,y2,x2);
 };
     const addListeners = () => {
         gameboard.forEach((row)=> {

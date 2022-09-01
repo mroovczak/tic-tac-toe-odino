@@ -7,21 +7,32 @@
 }
 #board .field {
     height: 200px;
+    width: 200px;
     text-align: center;
     line-height: 200px;
     font-size: 100px;
     /* background-color: aqua; */
     border: black solid 1px;
+    
 }
+#board .field::after{
+    content: "";
+    opacity: 0;
+}
+
 /* #board .field[data-sign="x"]{
     background-color: yellow;
 } */
 #board .field[data-sign="x"]::after{
     content: "\2717";
+    opacity: 1;
+    transition: opacity 1s;
 }
 /* #board .field[data-sign="o"]{
     background-color: green;
 } */
 #board .field[data-sign="o"]::after{
     content: "\1F53E";
+    opacity: 1;
+    transition: opacity 1s;
 }
