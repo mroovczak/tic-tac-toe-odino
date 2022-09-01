@@ -56,7 +56,7 @@ const gameModule = (() =>
         return true
     }
     const isMoveLegal = (e) =>{
-        return !(gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]); //returns true if field is NULL
+        return (null == gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]); //returns true if field is NULL
     };
     const isGameOver = () => {     
         return (gameBoard.gameboard.some(row => row.includes(null))); // to search 2d array for null field
@@ -137,7 +137,7 @@ const displayController = (() => {
         var calc=Math.atan((ay-by)/(bx-ax));
         calc=calc*180/Math.PI;
         var length=Math.sqrt((ax-bx)*(ax-bx)+(ay-by)*(ay-by));
-        document.body.innerHTML += "<div id='line' style='height:" + length + "px;width:"+lineThickness+";background-color:black;position:absolute;top:" + (ay) + "px;left:" + (ax) + "px;transform:rotate(" + calc + "deg);-ms-transform:rotate(" + calc + "deg);transform-origin:0% 0%;-moz-transform:rotate(" + calc + "deg);-moz-transform-origin:0% 0%;-webkit-transform:rotate(" + calc  + "deg);-webkit-transform-origin:0% 0%;-o-transform:rotate(" + calc + "deg);-o-transform-origin:0% 0%;'></div>"
+        document.body.innerHTML += "<div id='line' style='height:" + length + "px;width:"+lineThickness+";position:absolute;top:" + (ay) + "px;left:" + (ax) + "px;transform:rotate(" + calc + "deg);-ms-transform:rotate(" + calc + "deg);transform-origin:0% 0%;-moz-transform:rotate(" + calc + "deg);-moz-transform-origin:0% 0%;-webkit-transform:rotate(" + calc  + "deg);-webkit-transform-origin:0% 0%;-o-transform:rotate(" + calc + "deg);-o-transform-origin:0% 0%;'></div>"
     // console.log(ay,ax,by,bx);
     // console.log(y1,x1,y2,x2);
 };

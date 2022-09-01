@@ -13,11 +13,11 @@
     font-size: 100px;
     /* background-color: aqua; */
     border: black solid 1px;
-    
 }
 #board .field::after{
     content: "";
-    opacity: 0;
+    font-size: 50px;
+    transition:all 0.2s ease-in;
 }
 
 /* #board .field[data-sign="x"]{
@@ -25,14 +25,40 @@
 } */
 #board .field[data-sign="x"]::after{
     content: "\2717";
-    opacity: 1;
-    transition: opacity 1s;
+
+    font-size: 100px;
 }
 /* #board .field[data-sign="o"]{
     background-color: green;
 } */
 #board .field[data-sign="o"]::after{
     content: "\1F53E";
-    opacity: 1;
-    transition: opacity 1s;
+
+    font-size: 100px;
+}
+
+#line{
+    background-color: black;
+    animation-name: draw-animation;
+    /* animation-delay: 1s; */
+    animation-duration: 1s;
+    animation-timing-function: ease;
+
+}
+
+@keyframes draw-animation {
+    from {
+        height: 0%;
+        /* opacity: 0; */
+    }
+    to {
+    }
+}
+.container {
+    display: flex;
+    /* margin: 120px; */
+}
+.right {
+    border: black 1px solid;
+    width: 100%;
 }
