@@ -46,7 +46,8 @@ const gameModule = (() =>
             let playerNumber = gameBoard.gameboard[winner[0]][winner[1]]
             console.log(players[playerNumber].getName());
             players[playerNumber].setScore(players[playerNumber].getScore()+1);
-            displayController.drawLine(...winner);
+            displayController.drawLine(winner);
+            console.table(winner);
             console.table(players[playerNumber].getScore());
         };
         if (!isGameOver()) {
@@ -56,7 +57,7 @@ const gameModule = (() =>
         return true
     }
     const isMoveLegal = (e) =>{
-        return (null == gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]); //returns true if field is NULL
+        return (null == gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]); //returns true if field is NULL      
     };
     const isGameOver = () => {     
         return (gameBoard.gameboard.some(row => row.includes(null))); // to search 2d array for null field
@@ -120,26 +121,33 @@ const displayController = (() => {
         gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]=gameModule.getRound();
         // console.table(gameBoard.gameboard);    
     };
-    const drawLine = (y1,x1,y2,x2) =>{
-        let ax = gameboard[x1][y1].getBoundingClientRect().x + gameboard[x1][y1].getBoundingClientRect().width/2;
-        let ay = gameboard[x1][y1].getBoundingClientRect().y + gameboard[x1][y1].getBoundingClientRect().height/2;
-        let bx = gameboard[x2][y2].getBoundingClientRect().x + gameboard[x1][y1].getBoundingClientRect().width/2;
-        let by = gameboard[x2][y2].getBoundingClientRect().y + gameboard[x1][y1].getBoundingClientRect().height/2;
-        if(ay>by)
-        {
-            bx=ax+bx;  
-            ax=bx-ax;
-            bx=bx-ax;
-            by=ay+by;  
-            ay=by-ay;  
-            by=by-ay;
+    const drawLine = (cord) =>{
+        let ax = cord[0];
+        let ay = cord[1];
+        let bx = cord[2];
+        let by = cord[3];
+        let x1 = gameboard[ax][ay].getBoundingClientRect().x + gameboard[ax][ay].getBoundingClientRect().height/2;
+        let y1 = gameboard[ax][ay].getBoundingClientRect().y + gameboard[ax][ay].getBoundingClientRect().width/2;
+        let x2 = gameboard[bx][by].getBoundingClientRect().x + gameboard[bx][by].getBoundingClientRect().height/2;
+        let y2 = gameboard[bx][by].getBoundingClientRect().y + gameboard[bx][by].getBoundingClientRect().width/2;
+        
+        console.table(gameboard[ax][ay].getBoundingClientRect());
+        console.table(gameboard[bx][by].getBoundingClientRect());
+        // gameboard[x1][y1].setAttribute("start","true");
+        // gameboard[x2][y2].setAttribute("start","true");
+        if (x2 < x1) {
+            var tmp;
+            tmp = x2 ; x2 = x1 ; x1 = tmp;
+            tmp = y2 ; y2 = y1 ; y1 = tmp;
         }
-        var calc=Math.atan((ay-by)/(bx-ax));
-        calc=calc*180/Math.PI;
-        var length=Math.sqrt((ax-bx)*(ax-bx)+(ay-by)*(ay-by));
-        document.body.innerHTML += "<div id='line' style='height:" + length + "px;width:"+lineThickness+";position:absolute;top:" + (ay) + "px;left:" + (ax) + "px;transform:rotate(" + calc + "deg);-ms-transform:rotate(" + calc + "deg);transform-origin:0% 0%;-moz-transform:rotate(" + calc + "deg);-moz-transform-origin:0% 0%;-webkit-transform:rotate(" + calc  + "deg);-webkit-transform-origin:0% 0%;-o-transform:rotate(" + calc + "deg);-o-transform-origin:0% 0%;'></div>"
-    // console.log(ay,ax,by,bx);
-    // console.log(y1,x1,y2,x2);
+    
+        var lineLength = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        var m = (y2 - y1) / (x2 - x1);
+    
+        var degree = Math.atan(m) * 180 / Math.PI;
+    
+        document.body.innerHTML += "<div class='line' style='transform-origin: top left; transform: rotate(" + degree + "deg); width: " + lineLength + "px; height: "+ lineThickness +"; background: black; position: absolute; top: " + y1 + "px; left: " + x1 + "px;'></div>";
+    
 };
     const addListeners = () => {
         gameboard.forEach((row)=> {

@@ -37,8 +37,9 @@
     font-size: 100px;
 }
 
-#line{
+.line{
     background-color: black;
+    height: 40px;
     animation-name: draw-animation;
     /* animation-delay: 1s; */
     animation-duration: 1s;
@@ -48,7 +49,7 @@
 
 @keyframes draw-animation {
     from {
-        height: 0%;
+        width: 0%;
         /* opacity: 0; */
     }
     to {
