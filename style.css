@@ -1,9 +1,13 @@
+body {
+    margin:50px 200px;
+}
 #board {
     display: grid;
     width: 600px;
     background-color: whitesmoke;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
+    margin-right: 10px;
 }
 #board .field {
     height: 200px;
@@ -12,7 +16,7 @@
     line-height: 200px;
     font-size: 100px;
     /* background-color: aqua; */
-    border: black solid 1px;
+    border: black outset 1px;
 }
 #board .field::after{
     content: "";
@@ -62,4 +66,9 @@
 .right {
     border: black 1px solid;
     width: 100%;
+    display: flex;
+}
+.right>* {
+    flex: 1;
+    border: black 1px solid;
 }
