@@ -33,6 +33,8 @@ const gameModule = (() => {
     players.push(Player("Antek", "x"));
     players.push(Player("Mietek", "o"));
     const doMove = (e) => {
+        console.log("click");
+
         if (!isMoveLegal(e)) {
             return false
         } else {
@@ -45,11 +47,12 @@ const gameModule = (() => {
             let playerNumber = gameBoard.gameboard[winner[0]][winner[1]]
             console.log(players[playerNumber].getName());
             players[playerNumber].setScore(players[playerNumber].getScore() + 1);
-            displayController.drawLine(winner);
+            displayController.drawLine(winner); //causes problem withy starting new round
             // console.table(winner);
             // console.table(players[playerNumber].getScore());
             displayController.updateResults();
             nextGame();
+            return false
         };
         if (!isGameOver()) {
             console.log('draw');
@@ -59,7 +62,6 @@ const gameModule = (() => {
         return true
     }
     const isMoveLegal = (e) => {
-        console.log("click");
         return (null == gameBoard.gameboard[e.target.dataset["x"]][e.target.dataset["y"]]); //returns true if field is NULL      
     };
     const isGameOver = () => {
@@ -91,6 +93,7 @@ const gameModule = (() => {
             [null, null, null],
             [null, null, null]
         ];
+        // displayController.gameboard = gameBoard.gameboard;
         displayController.clearBoard();
         displayController.drawFields();
         displayController.addListeners();
@@ -119,6 +122,11 @@ const displayController = (() => {
         fields.forEach(field => {
             field.setAttribute("data-sign", "");
         })
+        gameboard.forEach((row, indexX) => {
+            row.forEach((field, indexY) => {
+            field.setAttribute("data-sign", "");
+            });
+        });
         const line = document.querySelector(".line");
         line.remove();
     }
@@ -170,8 +178,12 @@ const displayController = (() => {
         var m = (y2 - y1) / (x2 - x1);
 
         var degree = Math.atan(m) * 180 / Math.PI;
-
-        document.body.innerHTML += "<div class='line' style='transform-origin: top left; transform: rotate(" + degree + "deg); width: " + lineLength + "px; height: " + lineThickness + "; background: black; position: absolute; top: " + y1 + "px; left: " + x1 + "px;'></div>";
+        // let board = document.querySelector("#board");
+        let lineDiv = document.createElement('div');
+        lineDiv.innerHTML = "<div class='line' style='transform-origin: top left; transform: rotate(" + degree + "deg); width: " + lineLength + "px; height: " + lineThickness + "; background: black; position: absolute; top: " + y1 + "px; left: " + x1 + "px;'></div>";
+        lineDiv.classList="line";
+        document.body.appendChild(lineDiv);
+        //document.body.innerHTML += "<div class='line' style='transform-origin: top left; transform: rotate(" + degree + "deg); width: " + lineLength + "px; height: " + lineThickness + "; background: black; position: absolute; top: " + y1 + "px; left: " + x1 + "px;'></div>";
 
     };
     const addListeners = () => {
@@ -191,6 +203,7 @@ const displayController = (() => {
     };
     return {
         board,
+        gameboard,
         drawFields,
         addListeners,
         drawSign,
