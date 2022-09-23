@@ -95,7 +95,7 @@ const gameModule = (() => {
         ];
         // displayController.gameboard = gameBoard.gameboard;
         displayController.clearBoard();
-        displayController.drawFields();
+        // displayController.drawFields();
         displayController.addListeners();
     }
     const getRound = () => round;
@@ -119,16 +119,34 @@ const displayController = (() => {
     ]; //later filled with field elements
     const clearBoard = () => {
         const fields = document.querySelectorAll(".field");
-        fields.forEach(field => {
-            field.setAttribute("data-sign", "");
-        })
-        gameboard.forEach((row, indexX) => {
-            row.forEach((field, indexY) => {
-            field.setAttribute("data-sign", "");
-            });
-        });
+        
         const line = document.querySelector(".line");
-        line.remove();
+        const deleteAnimation = [
+            
+            { opacity: '0' }
+          ];
+        const deleteAnimationOptions = {
+            delay: 500,
+            duration: 1600,
+            iterations: 1,
+        }
+        line.animate(deleteAnimation, deleteAnimationOptions);
+        fields.forEach(field => {
+            field.animate([{color: 'white'}],deleteAnimationOptions);
+        })
+          setTimeout(() => {
+              line.remove();
+              
+              fields.forEach(field => {
+                  field.setAttribute("data-sign", "");
+              })
+              gameboard.forEach((row, indexX) => {
+                  row.forEach((field, indexY) => {
+                  field.setAttribute("data-sign", "");
+                  });
+              });
+            }, 2000);
+        
     }
     const drawFields = () => {
         gameBoard.gameboard.forEach((row, indexX) => {
@@ -181,7 +199,7 @@ const displayController = (() => {
         // let board = document.querySelector("#board");
         let lineDiv = document.createElement('div');
         lineDiv.innerHTML = "<div class='line' style='transform-origin: top left; transform: rotate(" + degree + "deg); width: " + lineLength + "px; height: " + lineThickness + "; background: black; position: absolute; top: " + y1 + "px; left: " + x1 + "px;'></div>";
-        lineDiv.classList="line";
+        // lineDiv.classList="line";
         document.body.appendChild(lineDiv);
         //document.body.innerHTML += "<div class='line' style='transform-origin: top left; transform: rotate(" + degree + "deg); width: " + lineLength + "px; height: " + lineThickness + "; background: black; position: absolute; top: " + y1 + "px; left: " + x1 + "px;'></div>";
 
