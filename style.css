@@ -1,6 +1,15 @@
 body {
     margin:50px 200px;
 }
+#game {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+#game > * {
+    justify-self: center;
+    /* border: 1px black solid; */
+}
+
 #board {
     display: grid;
     width: 600px;
@@ -65,11 +74,27 @@ body {
     /* margin: 120px; */
 }
 .right {
-    border: black 1px solid;
+    /* border: black 1px solid; */
+    font-size: 50px;
     width: 100%;
     display: flex;
 }
 .right>* {
     flex: 1;
-    border: black 1px solid;
+    /* border: black 1px solid; */
+}
+#menu {
+    background-color: rgba(24, 24, 24, 0.951);
+    color: aliceblue;
+    font-size: 50px;
+    position: absolute;
+    height: 80%;
+    width: 60%;
+    top: 50%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+    transform: translate(-50%, -50%);
+}
+#menu>.names {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }

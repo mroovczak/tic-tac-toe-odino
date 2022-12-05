@@ -30,8 +30,8 @@ const Player = (name, sign) => {
 const gameModule = (() => {
     let round = 0; //which player is moving
     let players = [];
-    players.push(Player("Antek", "x"));
-    players.push(Player("Mietek", "o"));
+    players.push(Player("Player 1", "x"));
+    players.push(Player("Player 2", "o"));
     const doMove = (e) => {
         console.log("click");
 
@@ -230,7 +230,19 @@ const displayController = (() => {
         clearBoard,
     }
 })();
-
+const menuController = (() => {
+    const loadMenu = () => {
+        let divMenu = document.createElement('div');
+        fetch('templates/menu.html')
+        .then(response=> response.text())
+        .then(
+            text => divMenu.innerHTML = text);
+        document.getElementById('game').appendChild(divMenu);
+    };
+    return {loadMenu}
+})();
+    
     displayController.drawFields();
     displayController.addListeners();
+    menuController.loadMenu();
 
