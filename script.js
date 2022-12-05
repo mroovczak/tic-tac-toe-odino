@@ -269,12 +269,20 @@ const displayController = (() => {
   };
 })();
 const menuController = (() => {
+  let divMenu = document.createElement("div");
   const loadMenu = () => {
-    let divMenu = document.createElement("div");
     fetch("templates/menu.html")
       .then((response) => response.text())
-      .then((text) => (divMenu.innerHTML = text));
+      .then((text) => {
+        divMenu.innerHTML = text;
+        divMenu
+          .querySelector(".start-button")
+          .addEventListener("click", exitMenu);
+      });
     document.getElementById("game").appendChild(divMenu);
+  };
+  const exitMenu = () => {
+    divMenu.remove();
   };
   return { loadMenu };
 })();
