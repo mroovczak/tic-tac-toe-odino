@@ -1,11 +1,13 @@
 body {
-    margin:50px 200px;
+    margin: 50px 200px;
 }
+
 #game {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-#game > * {
+
+#game>* {
     justify-self: center;
     /* border: 1px black solid; */
 }
@@ -18,6 +20,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     margin-right: 10px;
 }
+
 #board .field {
     height: 200px;
     width: 200px;
@@ -27,74 +30,117 @@ body {
     /* background-color: aqua; */
     border: black outset 1px;
 }
-#board .field::after{
+
+#board .field::after {
     content: "";
     font-size: 50px;
-    transition:all 0.2s ease-in;
+    transition: all 0.2s ease-in;
 }
 
 /* #board .field[data-sign="x"]{
     background-color: yellow;
 } */
-#board .field[data-sign="x"]::after{
+#board .field[data-sign="x"]::after {
     content: "\2717";
 
     font-size: 100px;
 }
+
 /* #board .field[data-sign="o"]{
     background-color: green;
 } */
-#board .field[data-sign="o"]::after{
+#board .field[data-sign="o"]::after {
     content: "\1F53E";
 
     font-size: 100px;
 }
 
-.line{
+.line {
     background-color: black;
     height: 40px;
     animation-name: draw-animation;
     /* animation-delay: 1s; */
     animation-duration: 1s;
     animation-timing-function: ease;
-
 }
-
 
 @keyframes draw-animation {
     from {
         width: 0%;
         /* opacity: 0; */
     }
-    to {
-    }
+
+    to {}
 }
+
 .container {
     display: flex;
     /* margin: 120px; */
 }
+
 .right {
     /* border: black 1px solid; */
     font-size: 50px;
     width: 100%;
     display: flex;
 }
+
 .right>* {
     flex: 1;
     /* border: black 1px solid; */
 }
+
 #menu {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 5fr 1fr;
     background-color: rgba(24, 24, 24, 0.951);
     color: aliceblue;
     font-size: 50px;
     position: absolute;
     height: 80%;
     width: 60%;
-    top: 50%;  /* position the top  edge of the element at the middle of the parent */
-    left: 50%; /* position the left edge of the element at the middle of the parent */
+    top: 50%;
+    /* position the top  edge of the element at the middle of the parent */
+    left: 50%;
+    /* position the left edge of the element at the middle of the parent */
     transform: translate(-50%, -50%);
 }
+
 #menu>.names {
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+#menu>.names .container {
+    display: block;
+    margin: 20px;
+}
+
+#menu>.names label {
+    display: block;
+    margin-bottom: 50px;
+}
+
+#menu>.names input {
+    display: block;
+    width: 80%;
+    height: 15%;
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    background-color: rgba(255, 255, 255, 0.024);
+}
+
+#menu>.options {
+
+    align-self: center;
+    justify-self: center;
+}
+
+#menu>.options>.start-button {
+    width: 400px;
+    height: 100px;
+    border-radius: 15px;
+    margin: 20px;
+    font-size: 40px;
 }
