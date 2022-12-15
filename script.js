@@ -16,6 +16,7 @@ const Player = (name, sign) => {
   let score = 0;
   const getScore = () => score;
   const setScore = (newScore) => (score = newScore);
+  const setName = (newName) => (name = newName);
   const getName = () => name;
   const getSign = () => sign;
   return {
@@ -23,6 +24,7 @@ const Player = (name, sign) => {
     getSign,
     getScore,
     setScore,
+    setName,
   };
 };
 
@@ -282,11 +284,14 @@ const menuController = (() => {
     document.getElementById("game").appendChild(divMenu);
   };
   const exitMenu = () => {
+    gameModule.players[0].setName(divMenu.querySelector(`[data-player="0"]`).value); 
+    gameModule.players[1].setName(divMenu.querySelector(`[data-player="1"]`).value); 
+    console.log(gameModule.players[0].getName());
     divMenu.remove();
   };
   return { loadMenu };
 })();
-
+menuController.loadMenu();
 displayController.drawFields();
 displayController.addListeners();
-menuController.loadMenu();
+
