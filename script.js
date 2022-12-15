@@ -254,9 +254,16 @@ const displayController = (() => {
     gameModule.players.forEach((player, index) => {
       let score = document
         .querySelector(`[data-player="${index}"]`)
-        .querySelector("#score");
+        .querySelector(".score");
       score.innerText = player.getScore();
       console.log(score);
+    });
+  };
+  const updateNames = () => {
+    let names = document.querySelectorAll(".name");
+    // console.log(names);
+    names.forEach((field) => {
+      field.innerHTML = gameModule.players[(field.dataset.player)].getName();
     });
   };
   return {
@@ -268,6 +275,7 @@ const displayController = (() => {
     drawLine,
     updateResults,
     clearBoard,
+    updateNames,
   };
 })();
 const menuController = (() => {
@@ -286,7 +294,8 @@ const menuController = (() => {
   const exitMenu = () => {
     gameModule.players[0].setName(divMenu.querySelector(`[data-player="0"]`).value); 
     gameModule.players[1].setName(divMenu.querySelector(`[data-player="1"]`).value); 
-    console.log(gameModule.players[0].getName());
+    // console.log(gameModule.players[0].getName());
+    displayController.updateNames();
     divMenu.remove();
   };
   return { loadMenu };
